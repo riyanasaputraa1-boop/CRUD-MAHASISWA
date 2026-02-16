@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
-use App\Models\Matakuliah; // tambahkan ini
 
 class MatakuliahController extends Controller
 {
@@ -24,39 +24,43 @@ class MatakuliahController extends Controller
             'kode_mk' => 'required|unique:matakuliahs,kode_mk',
             'nama_mk' => 'required',
             'sks' => 'required|integer|min:1|max:6',
-            'semester' => 'required|integer|min:1|max:14'
+            'semester' => 'required|integer|min:1|max:14',
         ]);
 
         Matakuliah::create($request->all());
-        return redirect()->route('matakuliah.index')
-            ->with('success', 'Data mata kuliah berhasil ditambahkan');
+        return redirect()->route('matakuliah.index');
     }
 
-    public function edit(string $id)
+    public function edit($kode_mk)
     {
-        $matakuliah = Matakuliah::findOrFail($id);
+        $matakuliah = Matakuliah::findOrFail($kode_mk);
         return view('matakuliah.edit', compact('matakuliah'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $kode_mk)
     {
         $request->validate([
             'nama_mk' => 'required',
             'sks' => 'required|integer|min:1|max:6',
-            'semester' => 'required|integer|min:1|max:14'
+            'semester' => 'required|integer|min:1|max:14',
         ]);
 
-        $matakuliah = Matakuliah::findOrFail($id);
+        $matakuliah = Matakuliah::findOrFail($kode_mk);
         $matakuliah->update($request->all());
-
-        return redirect()->route('matakuliah.index')
-            ->with('success', 'Data mata kuliah berhasil diperbarui');
+        return redirect()->route('matakuliah.index');
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        Matakuliah::destroy($id);
-        return redirect()->route('matakuliah.index')
-            ->with('success', 'Data mata kuliah berhasil dihapus');
+        $matakuliah = Matakuliah::findOrFail($id);
+        $matakuliah->delete();
+        return redirect()->route('matakuliah.index')->with('success','Mata kuliah berhasil dihapus');
     }
+
+    public function showMahasiswas($id)
+    {
+        $matakuliah = Matakuliah::with('mahasiswas')->findOrFail($id);
+        return view('matakuliah.mahasiswas', compact('matakuliah'));
+    }
+
 }

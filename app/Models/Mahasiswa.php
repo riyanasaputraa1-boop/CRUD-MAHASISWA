@@ -14,11 +14,16 @@ class Mahasiswa extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-   
     protected $fillable = [
         'nim',
         'nama',
         'kelas',
-        'matakuliah',
+        'matakuliah_id',
     ];
+
+   
+    public function matakuliah()
+    {
+        return $this->belongsTo(Matakuliah::class, 'matakuliah_id');
+    }
 }

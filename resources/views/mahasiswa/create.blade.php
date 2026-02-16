@@ -8,6 +8,7 @@
 <div class="container mt-4">
     <h2>Tambah Data Mahasiswa</h2>
 
+    {{-- Tampilkan error validasi --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -25,17 +26,27 @@
             <label class="form-label">NIM</label>
             <input type="text" name="nim" class="form-control" value="{{ old('nim') }}" required>
         </div>
+
         <div class="mb-3">
             <label class="form-label">Nama</label>
             <input type="text" name="nama" class="form-control" value="{{ old('nama') }}" required>
         </div>
+
         <div class="mb-3">
             <label class="form-label">Kelas</label>
             <input type="text" name="kelas" class="form-control" value="{{ old('kelas') }}" required>
         </div>
+
         <div class="mb-3">
-            <label class="form-label">Matakuliah</label>
-            <input type="text" name="matakuliah" class="form-control" value="{{ old('matakuliah') }}" required>
+            <label class="form-label">Mata Kuliah</label>
+            <select name="matakuliah_id" class="form-control" required>
+                <option value="">-- Pilih Mata Kuliah --</option>
+                @foreach($data_mk as $mk)
+                    <option value="{{ $mk->id }}" {{ old('matakuliah_id') == $mk->id ? 'selected' : '' }}>
+                        {{ $mk->nama_mk }} ({{ $mk->kode_mk }})
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <button type="submit" class="btn btn-success">Simpan</button>

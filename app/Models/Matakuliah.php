@@ -1,22 +1,27 @@
 <?php
 
-
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Matakuliah extends Model
 {
-    protected $primaryKey = 'kode_mk';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    use HasFactory;
 
-    // Tentukan field yang boleh diisi (fillable)
+    protected $table = 'matakuliahs'; // nama tabel
+
+   
     protected $fillable = [
         'kode_mk',
         'nama_mk',
         'sks',
-        'semester'
+        'semester',
     ];
+
+  
+    public function mahasiswas()
+    {
+        return $this->hasMany(Mahasiswa::class, 'matakuliah_id');
+    }
 }

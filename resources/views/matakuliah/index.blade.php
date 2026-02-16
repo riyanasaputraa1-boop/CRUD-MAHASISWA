@@ -9,7 +9,6 @@
     <h2>Daftar Mata Kuliah</h2>
     <a href="{{ route('matakuliah.create') }}" class="btn btn-success mb-3">Tambah Mata Kuliah</a>
 
-
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,12 +27,20 @@
                 <td>{{ $mk->sks }}</td>
                 <td>{{ $mk->semester }}</td>
                 <td>
-                    <a href="{{ route('matakuliah.edit', $mk->kode_mk) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('matakuliah.destroy', $mk->kode_mk) }}" method="POST" style="display:inline;">
+                    {{-- Tombol Edit --}}
+                    <a href="{{ route('matakuliah.edit', $mk->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                    {{-- Tombol Hapus --}}
+                    <form action="{{ route('matakuliah.destroy', $mk->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                            Hapus
+                        </button>
                     </form>
+
+                    {{-- Tombol Lihat Mahasiswa --}}
+                    <a href="{{ route('matakuliah.mahasiswas', $mk->id) }}" class="btn btn-info btn-sm"> Lihat Mahasiswa</a>
                 </td>
             </tr>
             @endforeach

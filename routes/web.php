@@ -11,3 +11,5 @@ Route::resource('mahasiswa', MahasiswaController::class);
 
 use App\Http\Controllers\MatakuliahController;
 Route::resource('matakuliah', MatakuliahController::class);
+
+Route::get('matakuliah/{id}/mahasiswas', [MatakuliahController::class, 'showMahasiswas'])->name('matakuliah.mahasiswas');

@@ -25,7 +25,7 @@
                 <td>{{ $mhs->nim }}</td>
                 <td>{{ $mhs->nama }}</td>
                 <td>{{ $mhs->kelas }}</td>
-                <td>{{ $mhs->matakuliah }}</td>
+                <td>{{ $mhs->matakuliah->nama_mk ?? '-' }}</td>
                 <td>
                     <a href="{{ route('mahasiswa.edit', $mhs->nim) }}" class="btn btn-warning btn-sm">Edit</a>
                     <form action="{{ route('mahasiswa.destroy', $mhs->nim) }}" method="POST" style="display:inline;">
